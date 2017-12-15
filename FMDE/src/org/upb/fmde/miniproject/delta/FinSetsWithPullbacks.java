@@ -5,7 +5,7 @@ import org.upb.fmde.de.categories.concrete.finsets.FinSet;
 import org.upb.fmde.de.categories.concrete.finsets.FinSets;
 import org.upb.fmde.de.categories.concrete.finsets.TotalFunction;
 import org.upb.fmde.de.categories.limits.Limit;
-public class FinSetDeltaComposition extends FinSets implements CategoryWithPullbacks<FinSet, TotalFunction>{
+public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbacks<FinSet, TotalFunction>{
 
 	
 	public Span<TotalFunction> compose(Span<TotalFunction> f, Span<TotalFunction> g) {
