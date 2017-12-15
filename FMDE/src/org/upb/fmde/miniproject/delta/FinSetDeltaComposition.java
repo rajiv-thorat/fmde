@@ -14,25 +14,7 @@ public class FinSetDeltaComposition extends FinSets implements CategoryWithPullb
 		return null ;
 	}
 	
-	public FinSetDeltaComposition pullback() {
-		
-		return null;
-		
-	}
-
-	@Override
-	public String showOb(FinSet o) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String showArr(TotalFunction f) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
+		@Override
 	public Limit<TotalFunction, TotalFunction> equaliser(TotalFunction f, TotalFunction g) {
 		// TODO Auto-generated method stub
 		return null;
