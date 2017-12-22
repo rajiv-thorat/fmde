@@ -1,0 +1,20 @@
+@startuml
+skinparam shadowing false
+hide members
+hide circle
+class "B.P_B"
+class "B.I_B"
+class "A.X_A"
+class "A.C_A"
+class "A.D_A"
+class "C.P_C"
+class "C.A_C"
+class "Equaliser.P_B"
+
+"B.P_B" --> "A.X_A" : "d'"
+"B.I_B" --> "A.D_A" : "d'"
+"C.P_C" --> "A.C_A" : "b'"
+"C.A_C" --> "A.X_A" : "b'"
+"Equaliser.P_B" --> "B.P_B" : "equaliserFunction;pi_B"
+"Equaliser.P_B" --> "C.A_C" : "equaliserFunction;pi_C"
+@enduml

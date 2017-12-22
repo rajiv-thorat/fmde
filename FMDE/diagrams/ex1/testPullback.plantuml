@@ -1,0 +1,12 @@
+@startuml
+digraph Diagram {
+  "B";
+  "A";
+  "C";
+  "Equaliser";
+  "B"->"A" [label=" d'"];
+  "C"->"A" [label=" b'"];
+  "Equaliser"->"B" [label=" equaliserFunction;pi_B"];
+  "Equaliser"->"C" [label=" equaliserFunction;pi_C"];
+}
+@enduml
