@@ -19,7 +19,7 @@ import org.upb.fmde.de.categories.concrete.finsets.TotalFunction;
 import org.upb.fmde.de.categories.diagrams.Diagram;
 import org.upb.fmde.de.categories.limits.Limit;
 public class TestRealPullback {
-	private static final String diagrams = "diagrams/ex1/";
+	private static final String diagrams = "diagrams/miniprojdelta/";
 	@Test
 	public void testEqualiserUniversality() {
 		FinSetDiagram d1 = createDiagram1();
