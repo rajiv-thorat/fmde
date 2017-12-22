@@ -7,7 +7,7 @@ digraph Diagram {
   "cartesian product_G_R"->"R" [label=" pi_R"];
   "candidate"->"G" [label=" candidate_G"];
   "candidate"->"R" [label=" candidate_R"];
-  "cartesian product_G_R"->"candidate" [label=" cartesian product_G_R_to_candidate"];
+  "candidate"->"cartesian product_G_R" [label=" candidate_to_cartesian product_G_R"];
   "candidate"->"candidate" [label=" id_candidate"];
 }
 @enduml

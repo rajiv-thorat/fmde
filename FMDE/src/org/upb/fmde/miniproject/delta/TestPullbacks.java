@@ -77,8 +77,8 @@ public class TestPullbacks {
 		List<Object> listofEntries = new ArrayList<>();
 		
 		// this is the actual candidate.
-		AbstractMap.SimpleEntry<Object, Object> entry1 = new AbstractMap.SimpleEntry<Object, Object>(diag.getObject("G").elts().get(0), diag.getObject("R").elts().get(0));
-		AbstractMap.SimpleEntry<Object, Object> entry2 = new AbstractMap.SimpleEntry<Object, Object>(diag.getObject("G").elts().get(1), diag.getObject("R").elts().get(0));
+		AbstractMap.SimpleEntry<Object, Object> entry1 = new AbstractMap.SimpleEntry<Object, Object>("Y", "7");
+		AbstractMap.SimpleEntry<Object, Object> entry2 = new AbstractMap.SimpleEntry<Object, Object>("X","5");
 		
 		listofEntries.add(entry1);
 		listofEntries.add(entry2);
@@ -110,6 +110,8 @@ public class TestPullbacks {
 		
 		diagToShow.saveAsDot(diagrams, "idcheck")
 		 .prettyPrint(diagrams, "idcheck");
+		
+		
 		
 		assertTrue(FinSets.FinSets.id(candidate).isTheSameAs(univResultSmaller));
 		
