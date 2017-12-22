@@ -16,18 +16,41 @@ import org.upb.fmde.de.categories.concrete.finsets.FinSets;
 import org.upb.fmde.de.categories.concrete.finsets.TotalFunction;
 import org.upb.fmde.de.categories.limits.Limit;
 public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbacks<FinSet, TotalFunction>{
-
-	
-	public Span<TotalFunction> compose(Span<TotalFunction> f, Span<TotalFunction> g) {
-		
-		
-		return null ;
-	}
 	
 		@Override
 	public Limit<TotalFunction, TotalFunction> equaliser(TotalFunction f, TotalFunction g) {
 		// TODO Auto-generated method stub
-		return null;
+		FinSet fsProduct = f.src();
+		FinSet fsEqual;
+		List<Object> lEqual = new ArrayList<>();
+		Map<Object, Object> mMappings = new HashMap<>();
+		Object rightElement;
+		for(Object productElement: fsProduct.elts()){
+			if(f.map(productElement).equals(g.map(productElement))) {
+				if (productElement instanceof Entry<?, ?>) {
+				rightElement = ((Entry<Object, Object>)productElement).getValue();
+				lEqual.add(rightElement);
+				mMappings.put(rightElement, productElement);
+				}
+			}
+		}
+		fsEqual = new FinSet("Equaliser", lEqual);
+		TotalFunction tfEqual = new TotalFunction(fsEqual, "equaliserFunction", fsProduct);
+		tfEqual.setMappings(mMappings);
+		Limit<TotalFunction, TotalFunction> lEqualiser = 
+				new Limit<TotalFunction, TotalFunction>(tfEqual, (tfEqualCandidate) -> {
+					TotalFunction xTilde = new TotalFunction(tfEqualCandidate.src(), "xTilde", tfEqualCandidate.trg());
+					
+					tfEqualCandidate.mappings().entrySet().forEach( (mapEntryCandidate) -> {
+						tfEqual.mappings().entrySet().forEach( (mapEntryEqualiser) -> {
+							if(mapEntryCandidate.getValue().equals(mapEntryEqualiser.getValue())) {
+								xTilde.addMapping(mapEntryCandidate.getKey(), mapEntryEqualiser.getKey());
+							}
+						});
+					});
+					return xTilde;
+				});
+		return lEqualiser;
 	}
 
 	@Override
