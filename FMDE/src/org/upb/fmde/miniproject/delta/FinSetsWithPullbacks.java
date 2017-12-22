@@ -83,7 +83,7 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 			FinSet source = source(left);
 			FinSet trgLeft = target(left);
 			FinSet trgRight = target(right);
-			TotalFunction x = new TotalFunction(product, product.label()+"_to_"+source.label(), source);
+			TotalFunction x = new TotalFunction(source, product.label()+"_to_"+source.label(), product);
 			Map<Object, Object> xMappings = new HashMap<>();
 			source.elts().stream().forEach( (xElement) -> {
 				Object leftMapping;

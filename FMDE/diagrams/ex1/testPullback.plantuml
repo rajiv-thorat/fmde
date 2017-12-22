@@ -1,0 +1,15 @@
+@startuml
+digraph Diagram {
+  "B";
+  "A";
+  "C";
+  "Equaliser";
+  "cartesian product_C_B";
+  "B"->"A" [label=" d'"];
+  "C"->"A" [label=" b'"];
+  "Equaliser"->"B" [label=" equaliserFunction;pi_B"];
+  "cartesian product_C_B"->"C" [label=" pi_C"];
+  "Equaliser"->"C" [label=" equaliserFunction;pi_C"];
+  "cartesian product_C_B"->"B" [label=" pi_B"];
+}
+@enduml
