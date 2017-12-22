@@ -36,8 +36,8 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 		List<Entry<Object, Object>> list = new ArrayList<>();
 		TotalFunction piA;
 		TotalFunction piB; 
-		Map<Object, Object> mappingstoA = new HashMap<>();
-		Map<Object, Object> mappingstoB = new HashMap<>();
+		Map<Object, Object> mappingstoA = new HashMap<>(); //for piA
+		Map<Object, Object> mappingstoB = new HashMap<>(); //for piB
 		Span<TotalFunction> span;
 		Function<Span<TotalFunction>, TotalFunction> universalProperty;
 		a.elts().forEach(elementA->{
