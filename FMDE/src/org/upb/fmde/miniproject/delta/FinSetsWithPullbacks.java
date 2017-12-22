@@ -28,7 +28,7 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 		for(Object productElement: fsProduct.elts()){
 			if(f.map(productElement).equals(g.map(productElement))) {
 				if (productElement instanceof Entry<?, ?>) {
-				rightElement = ((Entry<Object, Object>)productElement).getValue();
+				rightElement = ((Entry<Object, Object>)productElement).getKey();
 				lEqual.add(rightElement);
 				mMappings.put(rightElement, productElement);
 				}
