@@ -19,7 +19,7 @@ import org.upb.fmde.de.categories.concrete.finsets.TotalFunction;
 import org.upb.fmde.de.categories.diagrams.Diagram;
 import org.upb.fmde.de.categories.limits.Limit;
 public class TestRealPullback {
-
+	private static final String diagrams = "diagrams/ex1/";
 	@Test
 	public void testEqualiserUniversality() {
 		FinSetDiagram d1 = createDiagram1();
@@ -33,8 +33,10 @@ public class TestRealPullback {
 		//FinSet fsDPrime = new FinSet("D'", )
 	}
 	@Test
-	public void testPullback() {
+	public void testPullback() throws IOException {
 		FinSetDiagram d1 = createDiagram1();
+		d1.saveAsDot(diagrams, "testPullback")
+		 .prettyPrint(diagrams, "testPullback");
 //		FinSet fsB =  d1.getObject("B");
 //		FinSet fsA =  d1.getObject("A");
 //		FinSet fsC =  d1.getObject("C");
@@ -55,8 +57,11 @@ public class TestRealPullback {
 		tfDPrime.addMapping(fsB.get("I_B"), fsA.get("D_A"));
 		tfBPrime.addMapping(fsC.get("P_C"), fsA.get("C_A"));
 		tfBPrime.addMapping(fsC.get("A_C"), fsA.get("X_A"));
+		FinSetsWithPullbacks fwp = new FinSetsWithPullbacks();
+		Limit<Span<TotalFunction>, TotalFunction> limitPullback = fwp.pullback(new CoSpan<TotalFunction>(fwp.FinSets, tfBPrime, tfDPrime));
+		
 		FinSetDiagram d1 = new FinSetDiagram();
-		d1.objects(fsB, fsA, fsC).arrows(tfDPrime, tfBPrime);
+		d1.objects(fsB, fsA, fsC, limitPullback.obj.left.src(), limitPullback.obj.left.trg()).arrows(tfDPrime, tfBPrime, limitPullback.obj.left, limitPullback.obj.right);
 
 		return d1;
 	}
