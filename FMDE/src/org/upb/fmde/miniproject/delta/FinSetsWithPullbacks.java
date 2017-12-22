@@ -33,7 +33,7 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 	@Override
 	public Limit<Span<TotalFunction>, TotalFunction> product(FinSet a, FinSet b) {
 		
-		List<Entry<Object, Object>> list = new ArrayList<>();
+		List<Object> list = new ArrayList<>();
 		TotalFunction piA;
 		TotalFunction piB; 
 		Map<Object, Object> mappingstoA = new HashMap<>(); //for piA
@@ -69,7 +69,7 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 				if(xElement instanceof Entry<?,?>) {
 					xEntry = (Entry<Object, Object>) xElement;
 					if(productEntry.equals(xEntry)) {
-						xMappings.put(xEntry.getKey(), xEntry.getValue());
+						xMappings.put(xEntry, productEntry);
 					}
 				}
 			});});

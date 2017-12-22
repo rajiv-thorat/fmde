@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,48 +20,66 @@ import org.upb.fmde.de.categories.diagrams.Diagram;
 import org.upb.fmde.de.categories.limits.Limit;
 public class TestPullbacks {
 	@Test
-	public void testPullback() {
+	public void testProductEmptyUnivProperty() {
 		Diagram<FinSet, TotalFunction> d1 = createDiagram1();
 		FinSetsWithPullbacks fwp = new FinSetsWithPullbacks();
+		Limit<Span<TotalFunction>, TotalFunction> product =  fwp.product(d1.getObject("X"), d1.getObject("Z"));
+
 		FinSet emptyUniv = new FinSet("empty");
+		TotalFunction univPropTest1 = new TotalFunction(emptyUniv, "empty", d1.getObject("X"));
+		TotalFunction univPropTest2 = new TotalFunction(emptyUniv, "empty", d1.getObject("Z"));		
+		System.out.println("univ_prop empty");
+		TotalFunction univResult = product.up.apply(new Span<TotalFunction>(FinSetsWithPullbacks.FinSets, univPropTest1, univPropTest2));
+		printMap(univResult.mappings());	
+		assertTrue(univResult.mappings().isEmpty());	
+	}
+	@Test
+	public void testProductSmallerUnivProperty() {
+		Diagram<FinSet, TotalFunction> d1 = createDiagram1();
+		FinSetsWithPullbacks fwp = new FinSetsWithPullbacks();
+		Limit<Span<TotalFunction>, TotalFunction> product =  fwp.product(d1.getObject("X"), d1.getObject("Z"));		
+
 		List<Object> smallList = new ArrayList<>();
 		AbstractMap.SimpleEntry<Object, Object> simpleEntry =new AbstractMap.SimpleEntry<Object, Object>(d1.getObject("X").elts().get(1), d1.getObject("Z").elts().get(1)); 
 		smallList.add(simpleEntry);
-		
-		
 		FinSet smallerUniv = new FinSet("small", smallList);
-		TotalFunction univPropTest1 = new TotalFunction(emptyUniv, "empty", d1.getObject("X"));
-		TotalFunction univPropTest2 = new TotalFunction(emptyUniv, "empty", d1.getObject("Z"));
+		
 		TotalFunction univPropTest3 = new TotalFunction(smallerUniv, "small", d1.getObject("X"));
 		TotalFunction univPropTest4 = new TotalFunction(smallerUniv, "small", d1.getObject("Z"));
 		univPropTest3.addMapping(simpleEntry,d1.getObject("X").elts().get(1));
-		univPropTest4.addMapping(simpleEntry,d1.getObject("Z").elts().get(1));
+		univPropTest4.addMapping(simpleEntry,d1.getObject("Z").elts().get(1));	
+		TotalFunction univResultSmaller = product.up.apply(new Span<TotalFunction>(FinSetsWithPullbacks.FinSets, univPropTest3, univPropTest4));
+		System.out.println("univ_prop empty small");
+		printMap(univResultSmaller.mappings());
+		assertTrue(univResultSmaller.mappings().get(simpleEntry).equals(simpleEntry));
+	}
+	@Test
+	public void testProductResultnotEmpty() {
+		Diagram<FinSet, TotalFunction> d1 = createDiagram1();
+		FinSetsWithPullbacks fwp = new FinSetsWithPullbacks();
 		Limit<Span<TotalFunction>, TotalFunction> product =  fwp.product(d1.getObject("X"), d1.getObject("Z"));
+		
+		System.out.println("product result");
 		product.obj.left.src().elts().stream().forEach( (element) 
 				-> {
 					System.out.println(element);
 				});
 		System.out.println("left");
-		product.obj.left.mappings().entrySet().forEach( (amapping) -> {
-			System.out.println("Key: " + amapping.getKey() + ":" +amapping.getKey().getClass()+ ", Value: "+  amapping.getValue() + ":" +amapping.getValue().getClass());
-		});
-		System.out.println("right");
-		product.obj.right.mappings().entrySet().forEach( (amapping) -> {
-			System.out.println("Key: " + amapping.getKey() + ":" +amapping.getKey().getClass()+ ", Value: "+  amapping.getValue() + ":" +amapping.getValue().getClass());
-		});
-		System.out.println("univ_prop empty");
-		TotalFunction univResult = product.up.apply(new Span<TotalFunction>(FinSetsWithPullbacks.FinSets, univPropTest1, univPropTest2));
-		univResult.mappings().entrySet().forEach( (amapping) -> {
-			System.out.println("Key: " + amapping.getKey() + ":" +amapping.getKey().getClass()+ ", Value: "+  amapping.getValue() + ":" +amapping.getValue().getClass());
-		});
+		printMap(product.obj.left.mappings());
 		
-		System.out.println("univ_prop empty small");
-		TotalFunction univResultSmaller = product.up.apply(new Span<TotalFunction>(FinSetsWithPullbacks.FinSets, univPropTest3, univPropTest4));
-		univResultSmaller.mappings().entrySet().forEach( (amapping) -> {
+		System.out.println("right");
+		printMap(product.obj.right.mappings());
+		
+		
+		
+	
+		assertFalse(product.obj.left.src().elts().isEmpty());
+		
+	}
+	private void printMap(Map<Object, Object> pMap) {
+		pMap.entrySet().forEach( (amapping) -> {
 			System.out.println("Key: " + amapping.getKey() + ":" +amapping.getKey().getClass()+ ", Value: "+  amapping.getValue() + ":" +amapping.getValue().getClass());
 		});
-		assertTrue(univResult.mappings().isEmpty());
-		assertTrue(true);
 	}
 	private FinSetDiagram createDiagram1() {
 		FinSet X = new FinSet("X", "a", "b", "c");
