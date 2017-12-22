@@ -59,9 +59,13 @@ public class TestRealPullback {
 		tfBPrime.addMapping(fsC.get("A_C"), fsA.get("X_A"));
 		FinSetsWithPullbacks fwp = new FinSetsWithPullbacks();
 		Limit<Span<TotalFunction>, TotalFunction> limitPullback = fwp.pullback(new CoSpan<TotalFunction>(fwp.FinSets, tfBPrime, tfDPrime));
+		Span<TotalFunction> prodSpanObj = fwp.product(fsC, fsB).obj;
+		
+		
+		
 		
 		FinSetDiagram d1 = new FinSetDiagram();
-		d1.objects(fsB, fsA, fsC, limitPullback.obj.left.src(), limitPullback.obj.left.trg()).arrows(tfDPrime, tfBPrime, limitPullback.obj.left, limitPullback.obj.right);
+		d1.objects(fsB, fsA, fsC, limitPullback.obj.left.src(), limitPullback.obj.left.trg(),prodSpanObj.left.src()).arrows(tfDPrime, tfBPrime, limitPullback.obj.left, prodSpanObj.left, limitPullback.obj.right, prodSpanObj.right);
 
 		return d1;
 	}
