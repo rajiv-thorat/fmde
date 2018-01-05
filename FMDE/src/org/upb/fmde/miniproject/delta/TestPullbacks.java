@@ -31,42 +31,78 @@ public class TestPullbacks {
 	}
 	
 	@Test
-	public void testProductEmptyUnivProperty() {
+	public void testProductUnivPropertyWithEmptyCandidate() {
 		Diagram<FinSet, TotalFunction> d1 = createDiagram1();
 		FinSetsWithPullbacks fwp = new FinSetsWithPullbacks();
 		Limit<Span<TotalFunction>, TotalFunction> product =  fwp.product(d1.getObject("X"), d1.getObject("Z"));
 
 		FinSet emptyUniv = new FinSet("empty");
-		TotalFunction univPropTest1 = new TotalFunction(emptyUniv, "empty", d1.getObject("X"));
-		TotalFunction univPropTest2 = new TotalFunction(emptyUniv, "empty", d1.getObject("Z"));		
+		TotalFunction emptyToX = new TotalFunction(emptyUniv, "empty", d1.getObject("X"));
+		TotalFunction emptyToZ = new TotalFunction(emptyUniv, "empty", d1.getObject("Z"));		
 		System.out.println("univ_prop empty");
-		TotalFunction univResult = product.up.apply(new Span<TotalFunction>(FinSetsWithPullbacks.FinSets, univPropTest1, univPropTest2));
+		TotalFunction univResult = product.up.apply(new Span<TotalFunction>(FinSetsWithPullbacks.FinSets, emptyToX, emptyToZ));
 		printMap(univResult.mappings());	
+		
+	Diagram<FinSet, TotalFunction> diagToShow = new FinSetDiagram();
+		
+		diagToShow.objects(d1.getObject("X"),d1.getObject("Z"), product.obj.left.trg(), emptyUniv).arrows(product.obj.left,product.obj.right, emptyToX, emptyToZ, univResult, FinSets.FinSets.id(emptyUniv));
+		
+		
+		
+		
+		try {
+			diagToShow.saveAsDot(diagrams, "emptyCandidate")
+			 .prettyPrint(diagrams, "emptyCandidate");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		assertTrue(univResult.mappings().isEmpty());	
 	}
 	@Test
-	public void testProductSmallerUnivProperty() {
+	public void testProductUnivPropertyWithSmallCandidate() {
 		Diagram<FinSet, TotalFunction> d1 = createDiagram1();
 		FinSetsWithPullbacks fwp = new FinSetsWithPullbacks();
 		Limit<Span<TotalFunction>, TotalFunction> product =  fwp.product(d1.getObject("X"), d1.getObject("Z"));		
 
 		List<Object> smallList = new ArrayList<>();
-		AbstractMap.SimpleEntry<Object, Object> simpleEntry =new AbstractMap.SimpleEntry<Object, Object>(d1.getObject("X").elts().get(1), d1.getObject("Z").elts().get(1)); 
+		AbstractMap.SimpleEntry<Object, Object> simpleEntry =new AbstractMap.SimpleEntry<Object, Object>(d1.getObject("X").get("b"), d1.getObject("Z").get("3")); 
 		smallList.add(simpleEntry);
-		FinSet smallerUniv = new FinSet("small", smallList);
+		FinSet smallCandidate = new FinSet("small", smallList);
 		
-		TotalFunction univPropTest3 = new TotalFunction(smallerUniv, "small", d1.getObject("X"));
-		TotalFunction univPropTest4 = new TotalFunction(smallerUniv, "small", d1.getObject("Z"));
-		univPropTest3.addMapping(simpleEntry,d1.getObject("X").elts().get(1));
-		univPropTest4.addMapping(simpleEntry,d1.getObject("Z").elts().get(1));	
-		TotalFunction univResultSmaller = product.up.apply(new Span<TotalFunction>(FinSetsWithPullbacks.FinSets, univPropTest3, univPropTest4));
+		TotalFunction smallCandidateToX = new TotalFunction(smallCandidate, "small", d1.getObject("X"));
+		TotalFunction smallCandidateToZ = new TotalFunction(smallCandidate, "small", d1.getObject("Z"));
+		smallCandidateToX.addMapping(simpleEntry,d1.getObject("X").get("b"));
+		smallCandidateToZ.addMapping(simpleEntry,d1.getObject("Z").get("3"));	
+		TotalFunction smallCandidateToProduct = product.up.apply(new Span<TotalFunction>(FinSetsWithPullbacks.FinSets, smallCandidateToX, smallCandidateToZ));
 		System.out.println("univ_prop empty small");
-		printMap(univResultSmaller.mappings());
-		assertTrue(univResultSmaller.mappings().get(simpleEntry).equals(simpleEntry));
+		printMap(smallCandidateToProduct.mappings());
+
+		Diagram<FinSet, TotalFunction> diagToShow = new FinSetDiagram();
+		
+		diagToShow.objects(d1.getObject("X"),d1.getObject("Z"), product.obj.left.trg(), smallCandidate).arrows(product.obj.left,product.obj.right, smallCandidateToX, smallCandidateToZ, smallCandidateToProduct, FinSets.FinSets.id(smallCandidate));
+		
+		
+		
+		
+		try {
+			diagToShow.saveAsDot(diagrams, "smallerCandidate")
+			 .prettyPrint(diagrams, "smallerCandidate");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		assertTrue(FinSets.FinSets.compose(smallCandidateToProduct, product.obj.left).isTheSameAs(smallCandidateToX) &&
+				FinSets.FinSets.compose(smallCandidateToProduct, product.obj.right).isTheSameAs(smallCandidateToZ));
 	}
 	
 	@Test
-	public void testUnivProp() throws IOException {
+	public void testProductUnivPropertyWithEquivalentCandidate() throws IOException {
 		Diagram<FinSet, TotalFunction> diag = createDiagram2();
 		FinSetsWithPullbacks fwp = new FinSetsWithPullbacks();
 		Limit<Span<TotalFunction>, TotalFunction> product = fwp.product(diag.getObject("G"), diag.getObject("R"));
@@ -77,33 +113,33 @@ public class TestPullbacks {
 		List<Object> listofEntries = new ArrayList<>();
 		
 		// this is the actual candidate.
-		AbstractMap.SimpleEntry<Object, Object> entry1 = new AbstractMap.SimpleEntry<Object, Object>("Y", "7");
-		AbstractMap.SimpleEntry<Object, Object> entry2 = new AbstractMap.SimpleEntry<Object, Object>("X","5");
+		AbstractMap.SimpleEntry<Object, Object> entry1 = new AbstractMap.SimpleEntry<Object, Object>(diag.getObject("G").get("a"), diag.getObject("R").get("3"));
+		AbstractMap.SimpleEntry<Object, Object> entry2 = new AbstractMap.SimpleEntry<Object, Object>(diag.getObject("G").get("b"),diag.getObject("R").get("3"));
 		
 		listofEntries.add(entry1);
 		listofEntries.add(entry2);
 		
 		FinSet candidate = new FinSet("candidate", listofEntries);
 		
-		TotalFunction univPropTest3 = new TotalFunction(candidate, "candidate_G", diag.getObject("G"));
-		TotalFunction univPropTest4 = new TotalFunction(candidate, "candidate_R", diag.getObject("R"));
+		TotalFunction candidateToG = new TotalFunction(candidate, "candidate_G", diag.getObject("G"));
+		TotalFunction candidateToR = new TotalFunction(candidate, "candidate_R", diag.getObject("R"));
 				
-		univPropTest3.addMapping(entry1,diag.getObject("G").elts().get(0));
-		univPropTest4.addMapping(entry1,diag.getObject("R").elts().get(0));
-		univPropTest3.addMapping(entry2,diag.getObject("G").elts().get(1));
-		univPropTest4.addMapping(entry2,diag.getObject("R").elts().get(0));		
+		candidateToG.addMapping(entry1,diag.getObject("G").get("a"));
+		candidateToR.addMapping(entry1,diag.getObject("R").get("3"));
+		candidateToG.addMapping(entry2,diag.getObject("G").get("b"));
+		candidateToR.addMapping(entry2,diag.getObject("R").get("3"));		
 		
 		
 		
-		TotalFunction univResultSmaller = product.up.apply(new Span<TotalFunction>(FinSetsWithPullbacks.FinSets, univPropTest3, univPropTest4));
+		TotalFunction univCandidateToProduct = product.up.apply(new Span<TotalFunction>(FinSetsWithPullbacks.FinSets, candidateToG, candidateToR));
 		System.out.println("univ_prop empty candidate");
-		printMap(univResultSmaller.mappings());
+		printMap(univCandidateToProduct.mappings());
 		
 		
 		
 		Diagram<FinSet, TotalFunction> diagToShow = new FinSetDiagram();
 		
-		diagToShow.objects(diag.getObject("G"),diag.getObject("R"), product.obj.left.trg(), candidate).arrows(product.obj.left,product.obj.right, univPropTest3, univPropTest4, univResultSmaller, FinSets.FinSets.id(candidate));
+		diagToShow.objects(diag.getObject("G"),diag.getObject("R"), product.obj.left.trg(), candidate).arrows(product.obj.left,product.obj.right, candidateToG, candidateToR, univCandidateToProduct, FinSets.FinSets.id(candidate));
 		
 		
 		
@@ -113,8 +149,12 @@ public class TestPullbacks {
 		
 		
 		
-		assertTrue(FinSets.FinSets.id(candidate).isTheSameAs(univResultSmaller));
+		//assertTrue(FinSets.FinSets.id(candidate).isTheSameAs(univResultSmaller));
 		
+		
+		
+		assertTrue(FinSets.FinSets.compose(univCandidateToProduct, product.obj.left).isTheSameAs(candidateToG) &&
+				FinSets.FinSets.compose(univCandidateToProduct, product.obj.right).isTheSameAs(candidateToR));
 		
 		
 	}
