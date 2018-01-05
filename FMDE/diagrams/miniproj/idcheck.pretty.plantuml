@@ -1,0 +1,23 @@
+@startuml
+skinparam shadowing false
+hide members
+hide circle
+class "G.a"
+class "G.b"
+class "R.3"
+class "candidate.Y=7"
+class "candidate.X=5"
+
+"cartesian product_G_R.a=3" --> "G.a" : "pi_G"
+"cartesian product_G_R.b=3" --> "G.b" : "pi_G"
+"cartesian product_G_R.a=3" --> "R.3" : "pi_R"
+"cartesian product_G_R.b=3" --> "R.3" : "pi_R"
+"candidate.Y=7" --> "G.a" : "candidate_G"
+"candidate.X=5" --> "G.b" : "candidate_G"
+"candidate.Y=7" --> "R.3" : "candidate_R"
+"candidate.X=5" --> "R.3" : "candidate_R"
+"candidate.Y=7" --> "cartesian product_G_R.a=3" : "candidate_to_cartesian product_G_R"
+"candidate.X=5" --> "cartesian product_G_R.b=3" : "candidate_to_cartesian product_G_R"
+"candidate.Y=7" --> "candidate.Y=7" : "id_candidate"
+"candidate.X=5" --> "candidate.X=5" : "id_candidate"
+@enduml
