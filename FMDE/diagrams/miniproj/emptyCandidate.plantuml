@@ -1,0 +1,13 @@
+@startuml
+digraph Diagram {
+  "X";
+  "Z";
+  "empty";
+  "cartesian product_X_Z"->"X" [label=" pi_X"];
+  "cartesian product_X_Z"->"Z" [label=" pi_Z"];
+  "empty"->"X" [label=" empty"];
+  "empty"->"Z" [label=" empty"];
+  "empty"->"cartesian product_X_Z" [label=" empty_to_cartesian product_X_Z"];
+  "empty"->"empty" [label=" id_empty"];
+}
+@enduml

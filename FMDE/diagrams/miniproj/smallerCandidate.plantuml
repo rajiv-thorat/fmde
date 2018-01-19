@@ -1,0 +1,13 @@
+@startuml
+digraph Diagram {
+  "X";
+  "Z";
+  "small";
+  "cartesian product_X_Z"->"X" [label=" pi_X"];
+  "cartesian product_X_Z"->"Z" [label=" pi_Z"];
+  "small"->"X" [label=" small"];
+  "small"->"Z" [label=" small"];
+  "small"->"cartesian product_X_Z" [label=" small_to_cartesian product_X_Z"];
+  "small"->"small" [label=" id_small"];
+}
+@enduml

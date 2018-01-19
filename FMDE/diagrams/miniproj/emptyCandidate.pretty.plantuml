@@ -1,0 +1,30 @@
+@startuml
+skinparam shadowing false
+hide members
+hide circle
+class "X.a"
+class "X.b"
+class "X.c"
+class "Z.a"
+class "Z.3"
+class "Z.foo"
+
+"cartesian product_X_Z.a=a" --> "X.a" : "pi_X"
+"cartesian product_X_Z.a=3" --> "X.a" : "pi_X"
+"cartesian product_X_Z.a=foo" --> "X.a" : "pi_X"
+"cartesian product_X_Z.b=a" --> "X.b" : "pi_X"
+"cartesian product_X_Z.b=3" --> "X.b" : "pi_X"
+"cartesian product_X_Z.b=foo" --> "X.b" : "pi_X"
+"cartesian product_X_Z.c=a" --> "X.c" : "pi_X"
+"cartesian product_X_Z.c=3" --> "X.c" : "pi_X"
+"cartesian product_X_Z.c=foo" --> "X.c" : "pi_X"
+"cartesian product_X_Z.a=a" --> "Z.a" : "pi_Z"
+"cartesian product_X_Z.a=3" --> "Z.3" : "pi_Z"
+"cartesian product_X_Z.a=foo" --> "Z.foo" : "pi_Z"
+"cartesian product_X_Z.b=a" --> "Z.a" : "pi_Z"
+"cartesian product_X_Z.b=3" --> "Z.3" : "pi_Z"
+"cartesian product_X_Z.b=foo" --> "Z.foo" : "pi_Z"
+"cartesian product_X_Z.c=a" --> "Z.a" : "pi_Z"
+"cartesian product_X_Z.c=3" --> "Z.3" : "pi_Z"
+"cartesian product_X_Z.c=foo" --> "Z.foo" : "pi_Z"
+@enduml
