@@ -34,12 +34,12 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 				}
 			}
 		}
-		fsEqual = new FinSet("Equaliser", lEqual);
-		TotalFunction tfEqual = new TotalFunction(fsEqual, "equaliserFunction", fsProduct);
+		fsEqual = new FinSet(f.label() +"_eqFS_"+ g.label(), lEqual);
+		TotalFunction tfEqual = new TotalFunction(fsEqual, fsEqual.label() + "_eqTF_" + fsProduct.label(), fsProduct);
 		tfEqual.setMappings(mMappings);
 		Limit<TotalFunction, TotalFunction> lEqualiser = 
 				new Limit<TotalFunction, TotalFunction>(tfEqual, (tfEqualCandidate) -> {
-					TotalFunction xTilde = new TotalFunction(tfEqualCandidate.src(), "xTilde", tfEqualCandidate.trg());
+					TotalFunction xTilde = new TotalFunction(tfEqualCandidate.src(), tfEqualCandidate.src().label() + "_xTilde_" + tfEqualCandidate.trg().label(), tfEqualCandidate.trg());
 					
 					tfEqualCandidate.mappings().entrySet().forEach( (mapEntryCandidate) -> {
 						tfEqual.mappings().entrySet().forEach( (mapEntryEqualiser) -> {
@@ -71,7 +71,7 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 				mappingstoB.put(entry, elementB);
 			});
 		});
-		FinSet product = new FinSet("cartesian product_"+ a.label() +"_"+b.label(), list);
+		FinSet product = new FinSet(a.label() +"_X_"+b.label(), list);
 		piA = new TotalFunction(product, "pi_"+a.label(), a);
 		piA.setMappings(mappingstoA);
 		piB = new TotalFunction(product, "pi_"+b.label(), b);

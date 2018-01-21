@@ -14,7 +14,7 @@ digraph Diagram {
   "hospital_between_bar"->"hospital_end" [label=" Ybar_Delta_plus"];
   "hospital_barbar"->"hospital_old" [label=" BarBar_Delta_plus"];
   "hospital_barbar"->"hospital_end" [label=" BarBar_Delta_plus"];
-  "Equaliser"->"hospital_old" [label=" equaliserFunction;pi_hospital_between_bar;Xbar_Delta_minus"];
-  "Equaliser"->"hospital_end" [label=" equaliserFunction;pi_hospital_old_bar;Ybar_Delta_plus"];
+  "pi_hospital_between_bar;Ybar_Delta_minus_eqFS_pi_hospital_old_bar;Xbar_Delta_plus"->"hospital_old" [label=" pi_hospital_between_bar;Ybar_Delta_minus_eqFS_pi_hospital_old_bar;Xbar_Delta_plus_eqTF_hospital_between_bar_X_hospital_old_bar;pi_hospital_between_bar;Xbar_Delta_minus"];
+  "pi_hospital_between_bar;Ybar_Delta_minus_eqFS_pi_hospital_old_bar;Xbar_Delta_plus"->"hospital_end" [label=" pi_hospital_between_bar;Ybar_Delta_minus_eqFS_pi_hospital_old_bar;Xbar_Delta_plus_eqTF_hospital_between_bar_X_hospital_old_bar;pi_hospital_old_bar;Ybar_Delta_plus"];
 }
 @enduml
