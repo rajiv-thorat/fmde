@@ -39,7 +39,7 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 		tfEqual.setMappings(mMappings);
 		Limit<TotalFunction, TotalFunction> lEqualiser = 
 				new Limit<TotalFunction, TotalFunction>(tfEqual, (tfEqualCandidate) -> {
-					TotalFunction xTilde = new TotalFunction(tfEqualCandidate.src(), "("+tfEqualCandidate.src().label() + "_xTilde_" + tfEqualCandidate.trg().label() + ")", tfEqualCandidate.trg());
+					TotalFunction xTilde = new TotalFunction(tfEqualCandidate.src(), "("+tfEqualCandidate.src().label() + "_xTilde_" + tfEqualCandidate.trg().label() + ")", fsEqual);
 					
 					tfEqualCandidate.mappings().entrySet().forEach( (mapEntryCandidate) -> {
 						tfEqual.mappings().entrySet().forEach( (mapEntryEqualiser) -> {

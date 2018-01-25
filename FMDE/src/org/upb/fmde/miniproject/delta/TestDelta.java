@@ -57,8 +57,6 @@ public class TestDelta {
 		Span<TotalFunction> sDelta1 = new Span<TotalFunction>(deltaCat.cat, tfHCircDeltaMinus, tfHCircDeltaPlus);
 		Span<TotalFunction> sDelta2 = new Span<TotalFunction>(deltaCat.cat, tfHCircPrimeDeltaMinus, tfHCircPrimeDeltaPlus);
 		Span<TotalFunction> sDeltaCompose = deltaCat.compose(sDelta1, sDelta2);	
-		//diag.arrows(sDeltaCompose.left, sDeltaCompose.right);
-		//diag.objects(sDeltaCompose.left.src());
 		sDeltaCompose.left.src().label("H#");
 		sDeltaCompose.left.label("(H#δ-;Ĥδ-)");
 		sDeltaCompose.right.label("(H#δ+;Ĥ'δ+)");

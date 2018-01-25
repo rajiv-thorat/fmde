@@ -23,23 +23,16 @@ public class TestRealPullback {
 	@Test
 	public void testEqualiserUniversality() {
 		FinSetDiagram d1 = createDiagram1();
-//		FinSet fsB =  d1.getObject("B");
-//		FinSet fsA =  d1.getObject("A");
-//		FinSet fsC =  d1.getObject("C");
 		TotalFunction tfDPrime = d1.getArrow("d'"); 
 		TotalFunction tfBPrime = d1.getArrow("b'");
 		FinSetsWithPullbacks fwp = new FinSetsWithPullbacks();
 		Limit<Span<TotalFunction>, TotalFunction> limitPullback = fwp.pullback(new CoSpan<TotalFunction>(fwp.FinSets, tfBPrime, tfDPrime));
-		//FinSet fsDPrime = new FinSet("D'", )
 	}
 	@Test
 	public void testPullback() throws IOException {
 		FinSetDiagram d1 = createDiagram1();
 		d1.saveAsDot(diagrams, "testPullback")
 		 .prettyPrint(diagrams, "testPullback");
-//		FinSet fsB =  d1.getObject("B");
-//		FinSet fsA =  d1.getObject("A");
-//		FinSet fsC =  d1.getObject("C");
 		TotalFunction tfDPrime = d1.getArrow("d'"); 
 		TotalFunction tfBPrime = d1.getArrow("b'");
 		FinSetsWithPullbacks fwp = new FinSetsWithPullbacks();
