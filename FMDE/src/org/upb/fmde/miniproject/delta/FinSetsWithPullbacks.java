@@ -34,12 +34,12 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 				}
 			}
 		}
-		fsEqual = new FinSet(f.label() +"_eqFS_"+ g.label(), lEqual);
-		TotalFunction tfEqual = new TotalFunction(fsEqual, fsEqual.label() + "_eqTF_" + fsProduct.label(), fsProduct);
+		fsEqual = new FinSet("("+f.label() +"_eqFS_"+ g.label()+")", lEqual);
+		TotalFunction tfEqual = new TotalFunction(fsEqual, "("+fsEqual.label() + "->" + fsProduct.label()+")", fsProduct);
 		tfEqual.setMappings(mMappings);
 		Limit<TotalFunction, TotalFunction> lEqualiser = 
 				new Limit<TotalFunction, TotalFunction>(tfEqual, (tfEqualCandidate) -> {
-					TotalFunction xTilde = new TotalFunction(tfEqualCandidate.src(), tfEqualCandidate.src().label() + "_xTilde_" + tfEqualCandidate.trg().label(), tfEqualCandidate.trg());
+					TotalFunction xTilde = new TotalFunction(tfEqualCandidate.src(), "("+tfEqualCandidate.src().label() + "_xTilde_" + tfEqualCandidate.trg().label() + ")", tfEqualCandidate.trg());
 					
 					tfEqualCandidate.mappings().entrySet().forEach( (mapEntryCandidate) -> {
 						tfEqual.mappings().entrySet().forEach( (mapEntryEqualiser) -> {
@@ -71,10 +71,10 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 				mappingstoB.put(entry, elementB);
 			});
 		});
-		FinSet product = new FinSet(a.label() +"_X_"+b.label(), list);
-		piA = new TotalFunction(product, "pi_"+a.label(), a);
+		FinSet product = new FinSet("("+a.label() +"_X_"+b.label() + ")", list);
+		piA = new TotalFunction(product, "π"+a.label(), a);
 		piA.setMappings(mappingstoA);
-		piB = new TotalFunction(product, "pi_"+b.label(), b);
+		piB = new TotalFunction(product, "π"+b.label(), b);
 		piB.setMappings(mappingstoB);
 		span = new Span<TotalFunction>(this, piA, piB);
 		universalProperty = (tfSpan) -> {
@@ -83,7 +83,7 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 			FinSet source = source(left);
 			FinSet trgLeft = target(left);
 			FinSet trgRight = target(right);
-			TotalFunction x = new TotalFunction(source, source.label()+"_to_"+product.label(), product);
+			TotalFunction x = new TotalFunction(source, "(" +source.label()+"->"+product.label() + ")", product);
 			Map<Object, Object> xMappings = new HashMap<>();
 			source.elts().stream().forEach( (xElement) -> {
 				Object leftMapping;
