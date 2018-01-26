@@ -26,20 +26,20 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 		Map<Object, Object> mMappings = new HashMap<>();
 		Object rightElement;
 		for(Object productElement: fsProduct.elts()){
-			if(f.map(productElement).equals(g.map(productElement))) {
-				if (productElement instanceof Entry<?, ?>) {
-				rightElement = ((Entry<Object, Object>)productElement).getKey();
+			if(f.map(productElement).equals(g.map(productElement))) {// The product entry, where this condition holds looks like this: (X,X)
+				if (productElement instanceof Entry<?, ?>) { // For Tests we wouldve to write FinSet("equaliser", new Entry<>("X","X")) if we just use the whole entry. This is why we just use one "X"
+				rightElement = ((Entry<Object, Object>)productElement).getKey(); //As the Entry Looks like the top format, we could also take the value - they are both the same
 				lEqual.add(rightElement);
 				mMappings.put(rightElement, productElement);
 				}
 			}
 		}
-		fsEqual = new FinSet("Equaliser", lEqual);
-		TotalFunction tfEqual = new TotalFunction(fsEqual, "equaliserFunction", fsProduct);
+		fsEqual = new FinSet("("+f.label() +"_eqFS_"+ g.label()+")", lEqual);
+		TotalFunction tfEqual = new TotalFunction(fsEqual, "("+fsEqual.label() + "->" + fsProduct.label()+")", fsProduct);
 		tfEqual.setMappings(mMappings);
 		Limit<TotalFunction, TotalFunction> lEqualiser = 
 				new Limit<TotalFunction, TotalFunction>(tfEqual, (tfEqualCandidate) -> {
-					TotalFunction xTilde = new TotalFunction(tfEqualCandidate.src(), "xTilde", tfEqualCandidate.trg());
+					TotalFunction xTilde = new TotalFunction(tfEqualCandidate.src(), "("+tfEqualCandidate.src().label() + "_xTilde_" + tfEqualCandidate.trg().label() + ")", fsEqual);
 					
 					tfEqualCandidate.mappings().entrySet().forEach( (mapEntryCandidate) -> {
 						tfEqual.mappings().entrySet().forEach( (mapEntryEqualiser) -> {
@@ -66,24 +66,27 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 		a.elts().forEach(elementA->{
 			b.elts().forEach(elementB->{
 				Entry<Object, Object> entry = new AbstractMap.SimpleEntry<Object, Object>(elementA, elementB);
-				list.add(entry);
-				mappingstoA.put(entry, elementA);
-				mappingstoB.put(entry, elementB);
+				list.add(entry); //create the cartesian Product of the respective setelements
+				mappingstoA.put(entry, elementA); // map the respective element of the product pairs to their corresponding entry
+				mappingstoB.put(entry, elementB); 
 			});
 		});
-		FinSet product = new FinSet("cartesian product_"+ a.label() +"_"+b.label(), list);
-		piA = new TotalFunction(product, "pi_"+a.label(), a);
+		FinSet product = new FinSet("("+a.label() +"_X_"+b.label() + ")", list);
+		piA = new TotalFunction(product, "π"+a.label(), a);
 		piA.setMappings(mappingstoA);
-		piB = new TotalFunction(product, "pi_"+b.label(), b);
+		piB = new TotalFunction(product, "π"+b.label(), b);
 		piB.setMappings(mappingstoB);
 		span = new Span<TotalFunction>(this, piA, piB);
 		universalProperty = (tfSpan) -> {
 			TotalFunction left = tfSpan.left;
-			TotalFunction right = tfSpan.right;
+			TotalFunction right = tfSpan.right; 
 			FinSet source = source(left);
 			FinSet trgLeft = target(left);
 			FinSet trgRight = target(right);
-			TotalFunction x = new TotalFunction(source, source.label()+"_to_"+product.label(), product);
+			if(!(trgLeft.equals(a) && trgRight.equals(b))) {
+				throw new IllegalStateException("Product candidate Span needs to point to the same objects as the product itself");
+			}
+			TotalFunction x = new TotalFunction(source, "(" +source.label()+"->"+product.label() + ")", product);
 			Map<Object, Object> xMappings = new HashMap<>();
 			source.elts().stream().forEach( (xElement) -> {
 				Object leftMapping;

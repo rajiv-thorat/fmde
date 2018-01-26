@@ -3,11 +3,11 @@ digraph Diagram {
   "X";
   "Z";
   "small";
-  "cartesian product_X_Z"->"X" [label=" pi_X"];
-  "cartesian product_X_Z"->"Z" [label=" pi_Z"];
+  "(X_X_Z)"->"X" [label=" πX"];
+  "(X_X_Z)"->"Z" [label=" πZ"];
   "small"->"X" [label=" small"];
   "small"->"Z" [label=" small"];
-  "small"->"cartesian product_X_Z" [label=" small_to_cartesian product_X_Z"];
+  "small"->"(X_X_Z)" [label=" (small->(X_X_Z))"];
   "small"->"small" [label=" id_small"];
 }
 @enduml

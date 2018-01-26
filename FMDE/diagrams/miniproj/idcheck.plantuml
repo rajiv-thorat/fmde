@@ -3,11 +3,11 @@ digraph Diagram {
   "G";
   "R";
   "candidate";
-  "cartesian product_G_R"->"G" [label=" pi_G"];
-  "cartesian product_G_R"->"R" [label=" pi_R"];
+  "(G_X_R)"->"G" [label=" πG"];
+  "(G_X_R)"->"R" [label=" πR"];
   "candidate"->"G" [label=" candidate_G"];
   "candidate"->"R" [label=" candidate_R"];
-  "candidate"->"cartesian product_G_R" [label=" candidate_to_cartesian product_G_R"];
+  "candidate"->"(G_X_R)" [label=" (candidate->(G_X_R))"];
   "candidate"->"candidate" [label=" id_candidate"];
 }
 @enduml

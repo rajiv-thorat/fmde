@@ -1,0 +1,18 @@
+@startuml
+digraph Diagram {
+  "H";
+  "H'";
+  "H''";
+  "G";
+  "R";
+  "Ħ";
+  "Ħ"->"G" [label=" Ħδ₋"];
+  "Ħ"->"R" [label=" Ħδ₊"];
+  "G"->"H" [label=" Gδ₋"];
+  "G"->"H'" [label=" Gδ₊"];
+  "R"->"H'" [label=" Rδ₋"];
+  "R"->"H''" [label=" Rδ₊"];
+  "Ħ"->"H" [label=" (Ħδ₋;Gδ₋)"];
+  "Ħ"->"H''" [label=" (Ħδ₊;Rδ₊)"];
+}
+@enduml
