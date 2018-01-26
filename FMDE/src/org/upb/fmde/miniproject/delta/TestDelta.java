@@ -39,26 +39,26 @@ public class TestDelta {
 		Diagram<FinSet, TotalFunction> diag = createDiagram2();
 		FinSetDeltas deltaCat = new FinSetDeltas();
 		FinSet fsH = diag.getObject("H");
-		FinSet fsHCirc = diag.getObject("Ĥ");
+		FinSet fsG = diag.getObject("G");
 		FinSet fsHPrime = diag.getObject("H'");
-		FinSet fsHPrimeCirc = diag.getObject("Ĥ'");
+		FinSet fsR = diag.getObject("R");
 		FinSet fsHPrimePrime = diag.getObject("H''");
-		FinSet fsHBar = diag.getObject("H#");
-		TotalFunction tfHCircDeltaMinus = diag.getArrow("Ĥδ-");
-		TotalFunction tfHCircDeltaPlus = diag.getArrow("Ĥδ+");
-		TotalFunction tfHCircPrimeDeltaMinus = diag.getArrow("Ĥ'δ-");				
-		TotalFunction tfHCircPrimeDeltaPlus = diag.getArrow("Ĥ'δ+");
-		TotalFunction tfHCBarDeltaMinus = diag.getArrow("H#δ-");
-		TotalFunction tfHBarDeltaPlus = diag.getArrow("H#δ+");
-		TotalFunction tfDeltaCompMinus = diag.getArrow("(H#δ-;Ĥδ-)");
-		TotalFunction tfDeltaCompPlus = diag.getArrow("(H#δ+;Ĥ'δ+)");			
+		FinSet fsHBar = diag.getObject("Ħ");
+		TotalFunction tfGDeltaMinus = diag.getArrow("Gδ-");
+		TotalFunction tfGDeltaPlus = diag.getArrow("Gδ+");
+		TotalFunction tfRDeltaMinus = diag.getArrow("Rδ-");				
+		TotalFunction tfRDeltaPlus = diag.getArrow("Rδ+");
+		TotalFunction tfHCBarDeltaMinus = diag.getArrow("Ħδ-");
+		TotalFunction tfHBarDeltaPlus = diag.getArrow("Ħδ+");
+		TotalFunction tfDeltaCompMinus = diag.getArrow("(Ħδ-;Gδ-)");
+		TotalFunction tfDeltaCompPlus = diag.getArrow("(Ħδ+;Rδ+)");			
 		
-		Span<TotalFunction> sDelta1 = new Span<TotalFunction>(deltaCat.cat, tfHCircDeltaMinus, tfHCircDeltaPlus);
-		Span<TotalFunction> sDelta2 = new Span<TotalFunction>(deltaCat.cat, tfHCircPrimeDeltaMinus, tfHCircPrimeDeltaPlus);
+		Span<TotalFunction> sDelta1 = new Span<TotalFunction>(deltaCat.cat, tfGDeltaMinus, tfGDeltaPlus);
+		Span<TotalFunction> sDelta2 = new Span<TotalFunction>(deltaCat.cat, tfRDeltaMinus, tfRDeltaPlus);
 		Span<TotalFunction> sDeltaCompose = deltaCat.compose(sDelta1, sDelta2);	
-		sDeltaCompose.left.src().label("H#");
-		sDeltaCompose.left.label("(H#δ-;Ĥδ-)");
-		sDeltaCompose.right.label("(H#δ+;Ĥ'δ+)");
+		sDeltaCompose.left.src().label("Ħ");
+		sDeltaCompose.left.label("(Ħδ-;Gδ-)");
+		sDeltaCompose.right.label("(Ħδ+;Rδ+)");
 		diag.saveAsDot(diagrams, "testDeltaFinSets2")
 		 .prettyPrint(diagrams, "testDeltaFinSets2");
 		
@@ -69,53 +69,53 @@ public class TestDelta {
 	}
 	private FinSetDiagram createDiagram2() {
 		FinSet fsH = new FinSet("H", "Diagnosis1", "Bed1",  "OP1", "Receiption", "Emergency");
-		FinSet fsHCirc = new FinSet("Ĥ", "Bed1", "OP1", "Receiption", "Emergency");
+		FinSet fsG = new FinSet("G", "Bed1", "OP1", "Receiption", "Emergency");
 		FinSet fsHPrime = new FinSet("H'", "Bed2", "OP2", "Bed1", "OP1", "Receiption",  "Emergency");
-		FinSet fsHPrimeCirc = new FinSet("Ĥ'", "Bed2", "OP2", "Bed1", "OP1", "Emergency");
+		FinSet fsR = new FinSet("R", "Bed2", "OP2", "Bed1", "OP1", "Emergency");
 		FinSet fsHPrimePrime = new FinSet("H''", "Diagnosis2", "Bed2", "OP2", "Bed1", "OP1", "Emergency");
-		FinSet fsHBar = new FinSet("H#", "Bed1", "OP1", "Emergency");
+		FinSet fsHBar = new FinSet("Ħ", "Bed1", "OP1", "Emergency");
 		
 		
-		TotalFunction tfHCircDeltaMinus = new TotalFunction(fsHCirc, "Ĥδ-", fsH)
-				.addMapping(fsHCirc.get("Bed1"), fsH.get("Bed1"))
-				.addMapping(fsHCirc.get("OP1"), fsH.get("OP1"))
-				.addMapping(fsHCirc.get("Receiption"), fsH.get("Receiption"))
-				.addMapping(fsHCirc.get("Emergency"), fsH.get("Emergency"));
-		TotalFunction tfHCircDeltaPlus = new TotalFunction(fsHCirc, "Ĥδ+", fsHPrime)
-				.addMapping(fsHCirc.get("Bed1"), fsHPrime.get("Bed1"))
-				.addMapping(fsHCirc.get("OP1"), fsHPrime.get("OP1"))
-				.addMapping(fsHCirc.get("Receiption"), fsHPrime.get("Receiption"))
-				.addMapping(fsHCirc.get("Emergency"), fsHPrime.get("Emergency"));
-		TotalFunction tfHCircPrimeDeltaMinus = new TotalFunction(fsHPrimeCirc, "Ĥ'δ-", fsHPrime)
-				.addMapping(fsHPrimeCirc.get("Bed2"), fsHPrime.get("Bed2"))
-				.addMapping(fsHPrimeCirc.get("OP2"), fsHPrime.get("OP2"))
-				.addMapping(fsHPrimeCirc.get("Bed1"), fsHPrime.get("Bed1"))
-				.addMapping(fsHPrimeCirc.get("OP1"), fsHPrime.get("OP1"))
-				.addMapping(fsHPrimeCirc.get("Emergency"), fsHPrime.get("Emergency"));				
-		TotalFunction tfHCircPrimeDeltaPlus = new TotalFunction(fsHPrimeCirc, "Ĥ'δ+", fsHPrimePrime)
-				.addMapping(fsHPrimeCirc.get("Bed2"), fsHPrime.get("Bed2"))
-				.addMapping(fsHPrimeCirc.get("OP2"), fsHPrime.get("OP2"))
-				.addMapping(fsHPrimeCirc.get("Bed1"), fsHPrime.get("Bed1"))
-				.addMapping(fsHPrimeCirc.get("OP1"), fsHPrime.get("OP1"))
-				.addMapping(fsHPrimeCirc.get("Emergency"), fsHPrime.get("Emergency"));
-		TotalFunction tfHCBarDeltaMinus = new TotalFunction(fsHBar, "H#δ-", fsHCirc)
-				.addMapping(fsHBar.get("Bed1"), fsHCirc.get("Bed1"))
-				.addMapping(fsHBar.get("OP1"), fsHCirc.get("OP1"))
-				.addMapping(fsHBar.get("Emergency"), fsHCirc.get("Emergency"));
-		TotalFunction tfHBarDeltaPlus = new TotalFunction(fsHBar, "H#δ+", fsHPrimeCirc)
-				.addMapping(fsHBar.get("Bed1"), fsHPrimeCirc.get("Bed1"))
-				.addMapping(fsHBar.get("OP1"), fsHPrimeCirc.get("OP1"))
-				.addMapping(fsHBar.get("Emergency"), fsHPrimeCirc.get("Emergency"));
-		TotalFunction tfDeltaCompMinus = new TotalFunction(fsHBar, "(H#δ-;Ĥδ-)", fsH)
+		TotalFunction tfGDeltaMinus = new TotalFunction(fsG, "Gδ-", fsH)
+				.addMapping(fsG.get("Bed1"), fsH.get("Bed1"))
+				.addMapping(fsG.get("OP1"), fsH.get("OP1"))
+				.addMapping(fsG.get("Receiption"), fsH.get("Receiption"))
+				.addMapping(fsG.get("Emergency"), fsH.get("Emergency"));
+		TotalFunction tfGDeltaPlus = new TotalFunction(fsG, "Gδ+", fsHPrime)
+				.addMapping(fsG.get("Bed1"), fsHPrime.get("Bed1"))
+				.addMapping(fsG.get("OP1"), fsHPrime.get("OP1"))
+				.addMapping(fsG.get("Receiption"), fsHPrime.get("Receiption"))
+				.addMapping(fsG.get("Emergency"), fsHPrime.get("Emergency"));
+		TotalFunction tfRDeltaMinus = new TotalFunction(fsR, "Rδ-", fsHPrime)
+				.addMapping(fsR.get("Bed2"), fsHPrime.get("Bed2"))
+				.addMapping(fsR.get("OP2"), fsHPrime.get("OP2"))
+				.addMapping(fsR.get("Bed1"), fsHPrime.get("Bed1"))
+				.addMapping(fsR.get("OP1"), fsHPrime.get("OP1"))
+				.addMapping(fsR.get("Emergency"), fsHPrime.get("Emergency"));				
+		TotalFunction tfRDeltaPlus = new TotalFunction(fsR, "Rδ+", fsHPrimePrime)
+				.addMapping(fsR.get("Bed2"), fsHPrime.get("Bed2"))
+				.addMapping(fsR.get("OP2"), fsHPrime.get("OP2"))
+				.addMapping(fsR.get("Bed1"), fsHPrime.get("Bed1"))
+				.addMapping(fsR.get("OP1"), fsHPrime.get("OP1"))
+				.addMapping(fsR.get("Emergency"), fsHPrime.get("Emergency"));
+		TotalFunction tfHCBarDeltaMinus = new TotalFunction(fsHBar, "Ħδ-", fsG)
+				.addMapping(fsHBar.get("Bed1"), fsG.get("Bed1"))
+				.addMapping(fsHBar.get("OP1"), fsG.get("OP1"))
+				.addMapping(fsHBar.get("Emergency"), fsG.get("Emergency"));
+		TotalFunction tfHBarDeltaPlus = new TotalFunction(fsHBar, "Ħδ+", fsR)
+				.addMapping(fsHBar.get("Bed1"), fsR.get("Bed1"))
+				.addMapping(fsHBar.get("OP1"), fsR.get("OP1"))
+				.addMapping(fsHBar.get("Emergency"), fsR.get("Emergency"));
+		TotalFunction tfDeltaCompMinus = new TotalFunction(fsHBar, "(Ħδ-;Gδ-)", fsH)
 		.addMapping(fsHBar.get("Bed1"), fsH.get("Bed1"))
 		.addMapping(fsHBar.get("OP1"), fsH.get("OP1"))
 		.addMapping(fsHBar.get("Emergency"), fsH.get("Emergency"));
-		TotalFunction tfDeltaCompPlus = new TotalFunction(fsHBar, "(H#δ+;Ĥ'δ+)", fsHPrimePrime)
+		TotalFunction tfDeltaCompPlus = new TotalFunction(fsHBar, "(Ħδ+;Rδ+)", fsHPrimePrime)
 		.addMapping(fsHBar.get("Bed1"), fsHPrimePrime.get("Bed1"))
 		.addMapping(fsHBar.get("OP1"), fsHPrimePrime.get("OP1"))
 		.addMapping(fsHBar.get("Emergency"), fsHPrimePrime.get("Emergency"));		
 		FinSetDiagram d1 = new FinSetDiagram();
-		d1.objects(fsH, fsHPrime, fsHPrimePrime, fsHCirc, fsHPrimeCirc, fsHBar).arrows(tfHCBarDeltaMinus, tfHBarDeltaPlus, tfHCircDeltaMinus, tfHCircDeltaPlus, tfHCircPrimeDeltaMinus, tfHCircPrimeDeltaPlus, tfDeltaCompMinus, tfDeltaCompPlus);
+		d1.objects(fsH, fsHPrime, fsHPrimePrime, fsG, fsR, fsHBar).arrows(tfHCBarDeltaMinus, tfHBarDeltaPlus, tfGDeltaMinus, tfGDeltaPlus, tfRDeltaMinus, tfRDeltaPlus, tfDeltaCompMinus, tfDeltaCompPlus);
 
 		return d1;
 	}
