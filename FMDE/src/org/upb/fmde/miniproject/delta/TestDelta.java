@@ -69,9 +69,9 @@ public class TestDelta {
 		
 	}
 	private FinSetDiagram createDiagram2() {
-		FinSet fsH = new FinSet("H", "Diagnosis1", "Bed1",  "OP1", "Receiption", "Emergency");
-		FinSet fsG = new FinSet("G", "Bed1", "OP1", "Receiption", "Emergency");
-		FinSet fsHPrime = new FinSet("H'", "Bed2", "OP2", "Bed1", "OP1", "Receiption",  "Emergency");
+		FinSet fsH = new FinSet("H", "Diagnosis1", "Bed1",  "OP1", "Reception", "Emergency");
+		FinSet fsG = new FinSet("G", "Bed1", "OP1", "Reception", "Emergency");
+		FinSet fsHPrime = new FinSet("H'", "Bed2", "OP2", "Bed1", "OP1", "Reception",  "Emergency");
 		FinSet fsR = new FinSet("R", "Bed2", "OP2", "Bed1", "OP1", "Emergency");
 		FinSet fsHPrimePrime = new FinSet("H''", "Diagnosis2", "Bed2", "OP2", "Bed1", "OP1", "Emergency");
 		FinSet fsHBar = new FinSet("Ħ", "Bed1", "OP1", "Emergency");
@@ -80,12 +80,12 @@ public class TestDelta {
 		TotalFunction tfGDeltaMinus = new TotalFunction(fsG, "Gδ₋", fsH)
 				.addMapping(fsG.get("Bed1"), fsH.get("Bed1"))
 				.addMapping(fsG.get("OP1"), fsH.get("OP1"))
-				.addMapping(fsG.get("Receiption"), fsH.get("Receiption"))
+				.addMapping(fsG.get("Reception"), fsH.get("Reception"))
 				.addMapping(fsG.get("Emergency"), fsH.get("Emergency"));
 		TotalFunction tfGDeltaPlus = new TotalFunction(fsG, "Gδ₊", fsHPrime)
 				.addMapping(fsG.get("Bed1"), fsHPrime.get("Bed1"))
 				.addMapping(fsG.get("OP1"), fsHPrime.get("OP1"))
-				.addMapping(fsG.get("Receiption"), fsHPrime.get("Receiption"))
+				.addMapping(fsG.get("Reception"), fsHPrime.get("Reception"))
 				.addMapping(fsG.get("Emergency"), fsHPrime.get("Emergency"));
 		TotalFunction tfRDeltaMinus = new TotalFunction(fsR, "Rδ₋", fsHPrime)
 				.addMapping(fsR.get("Bed2"), fsHPrime.get("Bed2"))
