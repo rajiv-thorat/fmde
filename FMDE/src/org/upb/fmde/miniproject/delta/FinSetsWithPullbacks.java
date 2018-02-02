@@ -26,9 +26,10 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 		Map<Object, Object> mMappings = new HashMap<>();
 		Object rightElement;
 		for(Object productElement: fsProduct.elts()){
-			if(f.map(productElement).equals(g.map(productElement))) {// The product entry, where this condition holds looks like this: (X,X)
-				if (productElement instanceof Entry<?, ?>) { // For Tests we wouldve to write FinSet("equaliser", new Entry<>("X","X")) if we just use the whole entry. This is why we just use one "X"
-				rightElement = ((Entry<Object, Object>)productElement).getKey(); //As the Entry Looks like the top format, we could also take the value - they are both the same
+			if(f.map(productElement).equals(g.map(productElement))) {
+				if (productElement instanceof Entry<?, ?>) { // For Tests we wouldve to write FinSet("equaliser", new Entry<>("X","Y")) if we just use the whole entry. 
+					//This is why we just use one part of it
+				rightElement = ((Entry<Object, Object>)productElement).getKey(); 
 				lEqual.add(rightElement);
 				mMappings.put(rightElement, productElement);
 				}
@@ -43,8 +44,8 @@ public class FinSetsWithPullbacks extends FinSets implements CategoryWithPullbac
 					
 					tfEqualCandidate.mappings().entrySet().forEach( (mapEntryCandidate) -> {
 						tfEqual.mappings().entrySet().forEach( (mapEntryEqualiser) -> {
-							if(mapEntryCandidate.getValue().equals(mapEntryEqualiser.getValue())) {
-								xTilde.addMapping(mapEntryCandidate.getKey(), mapEntryEqualiser.getKey());
+							if(tfEqualCandidate.map(mapEntryCandidate).equals(tfEqual.map(mapEntryEqualiser))) {
+								xTilde.addMapping(mapEntryCandidate, mapEntryEqualiser);
 							}
 						});
 					});

@@ -4,7 +4,7 @@ import org.upb.fmde.de.categories.Category;
 import org.upb.fmde.de.categories.colimits.CoLimit;
 
 public interface CategoryWithPushouts<Ob, Arr> extends Category<Ob, Arr> {
-	
+
 	default CoLimit<CoSpan<Arr>, Arr> pushout(Span<Arr> span) {
 		Ob R = target(span.left);
 		Ob G = target(span.right);
